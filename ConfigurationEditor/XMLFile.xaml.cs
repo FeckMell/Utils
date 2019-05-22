@@ -49,6 +49,14 @@ namespace ConfigurationEditor
     #region Public methods
 
     /// <summary>
+    /// Saves file
+    /// </summary>
+    public void Save()
+    {
+      Save_Handler(null, null);
+    }
+
+    /// <summary>
     /// Filters values by name
     /// </summary>
     /// <param name="filter"></param>
@@ -103,7 +111,7 @@ namespace ConfigurationEditor
         if (e.NodeType == XmlNodeType.Comment) { continue; }
         UIChildren.Children.Add(new XMLFileNode(e));
       }
-    } 
+    }
 
     #endregion
 
@@ -128,6 +136,7 @@ namespace ConfigurationEditor
           Document.Save(Document.BaseURI.Remove(0, 8));
           Reload_Handler(null, null);
         }
+        if (sender != null) { MessageBox.Show($"File {UIFile.Content} saved!"); }
       }
       catch (Exception ex) { MessageBox.Show(ex.Message); }
     }

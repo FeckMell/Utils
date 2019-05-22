@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConfigurationEditor
 {
@@ -61,7 +63,7 @@ namespace ConfigurationEditor
         try { UIFiles.Children.Add(new XMLFile(e)); }
         catch (Exception ex) { System.Windows.Forms.MessageBox.Show($"{ex.Message}"); }
       }
-    } 
+    }
 
     #endregion
 
@@ -94,11 +96,15 @@ namespace ConfigurationEditor
     /// <param name="e"></param>
     private void SearchFile_Handler(object sender, RoutedEventArgs e)
     {
-      foreach (XMLFile x in UIFiles.Children)
+      try
       {
-        x.CancelFilter();
-        x.Visibility = (x.UIFile.Content as string).ToUpper().Contains(UIFilter.Text.ToUpper()) ? Visibility.Visible : Visibility.Collapsed;
+        foreach (XMLFile x in UIFiles.Children)
+        {
+          x.CancelFilter();
+          x.Visibility = (x.UIFile.Content as string).ToUpper().Contains(UIFilter.Text.ToUpper()) ? Visibility.Visible : Visibility.Collapsed;
+        }
       }
+      catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
     }
 
     /// <summary>
@@ -108,11 +114,15 @@ namespace ConfigurationEditor
     /// <param name="e"></param>
     private void SearchByName_Handler(object sender, RoutedEventArgs e)
     {
-      foreach (XMLFile x in UIFiles.Children)
+      try
       {
-        x.CancelFilter();
-        x.FilterByName(UIFilter.Text);
+        foreach (XMLFile x in UIFiles.Children)
+        {
+          x.CancelFilter();
+          x.FilterByName(UIFilter.Text);
+        }
       }
+      catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
     }
 
     /// <summary>
@@ -122,11 +132,15 @@ namespace ConfigurationEditor
     /// <param name="e"></param>
     private void SearchByValue_Handler(object sender, RoutedEventArgs e)
     {
-      foreach (XMLFile x in UIFiles.Children)
+      try
       {
-        x.CancelFilter();
-        x.FilterByValue(UIFilter.Text);
+        foreach (XMLFile x in UIFiles.Children)
+        {
+          x.CancelFilter();
+          x.FilterByValue(UIFilter.Text);
+        }
       }
+      catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
     }
 
     /// <summary>
@@ -136,10 +150,8 @@ namespace ConfigurationEditor
     /// <param name="e"></param>
     private void CollapseAll_Handler(object sender, RoutedEventArgs e)
     {
-      foreach(XMLFile x in UIFiles.Children)
-      {
-        x.UIExpander.IsExpanded = false;
-      }
+      try { foreach (XMLFile x in UIFiles.Children) { x.UIExpander.IsExpanded = false; } }
+      catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
     }
 
     /// <summary>
@@ -149,10 +161,23 @@ namespace ConfigurationEditor
     /// <param name="e"></param>
     private void ExpandAll_Handler(object sender, RoutedEventArgs e)
     {
-      foreach (XMLFile x in UIFiles.Children)
+      try { foreach (XMLFile x in UIFiles.Children) { x.UIExpander.IsExpanded = true; } }
+      catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
+    }
+
+    /// <summary>
+    /// Saves all files
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SaveAll_Handler(object sender, RoutedEventArgs e)
+    {
+      try
       {
-        x.UIExpander.IsExpanded = true;
+        foreach (XMLFile x in UIFiles.Children) { x.Save(); }
+        System.Windows.MessageBox.Show("All files saved!");
       }
+      catch(Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
     }
   }
 }

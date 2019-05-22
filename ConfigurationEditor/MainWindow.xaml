@@ -19,7 +19,8 @@
     <Grid Grid.Row="0">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="80" />
+        <ColumnDefinition Width="80" />
         <ColumnDefinition Width="80" />
         <ColumnDefinition Width="80" />
       </Grid.ColumnDefinitions>
@@ -28,6 +29,7 @@
       <Button Margin="3, 0, 0, 0" Content="Open folder" Click="OpenFolder_Handler" Grid.Column="1"/>
       <Button Margin="3, 0, 0, 0" Content="Collapse all" Click="CollapseAll_Handler" Grid.Column="2"/>
       <Button Margin="3, 0, 0, 0" Content="Expand all" Click="ExpandAll_Handler" Grid.Column="3"/>
+      <Button Margin="3, 0, 0, 0" Content="Save all" Click="SaveAll_Handler" Grid.Column="4"/>
     </Grid>
 
     <Grid Grid.Row="2">
@@ -47,6 +49,5 @@
     <ScrollViewer Margin="10,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="4">
       <StackPanel Name="UIFiles" Orientation="Vertical"/>
     </ScrollViewer>
-
   </Grid>
 </Window>
